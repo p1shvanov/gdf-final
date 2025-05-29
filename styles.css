@@ -75,7 +75,8 @@ body {
   grid-area: logo;
   position: relative;
   width: 80%;
-  max-width: 800px;
+  max-width: 60%;
+  padding: 200px;
   margin: 0 auto;
   height: 100%;
   display: flex;
@@ -89,14 +90,10 @@ body {
   max-height: 100%;
   object-fit: contain;
   opacity: 0;
-  transition: opacity 5s ease-in-out;
-  animation: fadeOutRightBig; /* referring directly to the animation's @keyframe declaration */
-  animation-duration: 5s; /* don't forget to set a duration! */
+  transition: opacity 1s ease-in-out;
 }
 
 .logo.active {
-  animation: fadeInLeftBig; /* referring directly to the animation's @keyframe declaration */
-  animation-duration: 5s; /* don't forget to set a duration! */
   opacity: 1;
 }
 
