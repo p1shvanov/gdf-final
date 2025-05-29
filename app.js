@@ -6,7 +6,6 @@ import { LogoAnimation } from "./logo-animation.js";
 
 class App {
   constructor() {
-    console.log("hi");
     window.PIXEL_RATIO = getPixelRatio();
     this.canvas = setupCanvas();
     this.binaryAnimation = new BinaryAnimation(this.canvas, CONFIG);
@@ -45,6 +44,5 @@ class App {
 
 // Initialize the app when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("boom");
   new App();
 });

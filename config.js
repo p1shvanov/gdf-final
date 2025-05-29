@@ -5,7 +5,7 @@ export const CONFIG = {
 
   // Символы
   BIN_CHARS: ["0", "1", "§"],
-  EMPTY_PROBABILITY: 0.1, // 10% пустых полей
+  EMPTY_PROBABILITY: 0.3, // 10% пустых полей
 
   // Цвета
   BRANDBOOK_COLORS: ["#5e2ced", "#db6dc4", "#4fdfb4"],

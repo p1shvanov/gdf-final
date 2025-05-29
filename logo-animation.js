@@ -13,7 +13,7 @@ export class LogoAnimation {
     }
   }
 
-  start(intervalTime = 3000) {
+  start(intervalTime = 10000) {
     this.interval = setInterval(() => {
       this.rotate();
     }, intervalTime);

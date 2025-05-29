@@ -28,6 +28,17 @@ body {
   z-index: -1;
 }
 
+#canvas-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .content {
   flex: 1;
   display: grid;
@@ -78,10 +89,14 @@ body {
   max-height: 100%;
   object-fit: contain;
   opacity: 0;
-  transition: opacity 1.5s ease-in-out;
+  transition: opacity 5s ease-in-out;
+  animation: fadeOutRightBig; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 5s; /* don't forget to set a duration! */
 }
 
 .logo.active {
+  animation: fadeInLeftBig; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 5s; /* don't forget to set a duration! */
   opacity: 1;
 }
 
