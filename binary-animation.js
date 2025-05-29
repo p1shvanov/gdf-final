@@ -27,7 +27,7 @@ export class BinaryAnimation {
   }
 
   setupGradient() {
-    this.gradient = this.ctx.createLinearGradient(0, 0, 746, 353);
+    this.gradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
     this.gradient.addColorStop(0, this.config.BRANDBOOK_COLORS[0]);
     this.gradient.addColorStop(0.5, this.config.BRANDBOOK_COLORS[1]);
     this.gradient.addColorStop(1, this.config.BRANDBOOK_COLORS[2]);
