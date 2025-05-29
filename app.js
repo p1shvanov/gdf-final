@@ -1,6 +1,6 @@
-import { CONFIG } from "./config2.js";
+import { CONFIG } from "./config.js";
 import { getPixelRatio, setupCanvas } from "./canvas-utils.js";
-import { BinaryAnimation } from "./binary-animation2.js";
+import { BinaryAnimation } from "./binary-animation.js";
 import { TextAnimation } from "./text-animation.js";
 import { LogoAnimation } from "./logo-animation.js";
 
