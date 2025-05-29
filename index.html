@@ -41,8 +41,18 @@
       </div>
 
       <div class="console-container">
-        <span id="text"></span>
-        <div class="console-underscore" id="console">&#95;</div>
+        <div class="terminal-header">
+          <div class="terminal-buttons">
+            <button class="terminal-button close" title="Close terminal"></button>
+            <button class="terminal-button minimize" title="Minimize terminal"></button>
+            <button class="terminal-button maximize" title="Maximize terminal"></button>
+          </div>
+          <div class="terminal-title">gdf-terminal</div>
+        </div>
+        <div class="terminal-content">
+          <div class="terminal-history" id="terminal-history"></div>
+          <div class="terminal-input" id="terminal-input"></div>
+        </div>
       </div>
     </main>
 

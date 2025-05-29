@@ -1,7 +1,7 @@
 import { CONFIG } from "./config.js";
 import { getPixelRatio, setupCanvas } from "./canvas-utils.js";
 import { BinaryAnimation } from "./binary-animation.js";
-import { TextAnimation } from "./text-animation.js";
+import { TerminalAnimation } from "./terminal-animation.js";
 import { LogoAnimation } from "./logo-animation.js";
 
 class App {
@@ -9,8 +9,8 @@ class App {
     window.PIXEL_RATIO = getPixelRatio();
     this.canvas = setupCanvas();
     this.binaryAnimation = new BinaryAnimation(this.canvas, CONFIG);
-    this.textAnimation = new TextAnimation(
-      "text",
+    this.terminalAnimation = new TerminalAnimation(
+      "terminal",
       CONFIG.DEMO_WORDS,
       CONFIG.BRANDBOOK_COLORS
     );

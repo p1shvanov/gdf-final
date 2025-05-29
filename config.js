@@ -5,7 +5,7 @@ export const CONFIG = {
 
   // Символы
   BIN_CHARS: ["0", "1", "§"],
-  EMPTY_PROBABILITY: 0.3, // 10% пустых полей
+  EMPTY_PROBABILITY: 0.4, // 40% пустых полей
 
   // Цвета
   BRANDBOOK_COLORS: ["#5e2ced", "#db6dc4", "#4fdfb4"],
@@ -15,7 +15,7 @@ export const CONFIG = {
   // Эффекты
   TWINKLE: {
     ENABLED: true,
-    PROBABILITY: 0.01, // 1% chance
+    PROBABILITY: 0.2, // 1% chance
     DURATION_MS: 100,
   },
 
