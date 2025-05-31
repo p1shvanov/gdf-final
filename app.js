@@ -12,11 +12,11 @@ class App {
     this.binaryAnimation = new BinaryAnimation(this.canvas, CONFIG);
     
     // Initialize terminal
-    const terminalContainer = document.getElementById('terminal-container');
-    if (terminalContainer) {
-      this.terminal = new Terminal(CONFIG.DEMO_WORDS, CONFIG.BRANDBOOK_COLORS);
-      terminalContainer.appendChild(this.terminal.element);
-    }
+    // const terminalContainer = document.getElementById('terminal-container');
+    // if (terminalContainer) {
+    //   this.terminal = new Terminal(CONFIG.DEMO_WORDS, CONFIG.BRANDBOOK_COLORS);
+    //   terminalContainer.appendChild(this.terminal.element);
+    // }
     
     this.logoAnimation = new LogoAnimation();
     this.lingoAnimation = new LingoAnimation(CONFIG)

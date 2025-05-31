@@ -4,25 +4,61 @@ export class LogoAnimation {
     this.currentIndex = 0;
     this.interval = null;
     
-    // Animation pairs for exit and entrance
-    this.animationPairs = [
-      { exit: 'fadeOutRightBig', enter: 'fadeInLeftBig' },
-      { exit: 'fadeOutLeftBig', enter: 'fadeInRightBig' },
-      { exit: 'bounceOutRight', enter: 'bounceInLeft' },
-      { exit: 'bounceOutLeft', enter: 'bounceInRight' },
-    ];
-
+    // Add CSS for floating animation
+    this.addFloatingAnimation();
     this.init();
+  }
+
+  addFloatingAnimation() {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes float {
+        0% { 
+          transform: translateY(0px); 
+          filter: drop-shadow(0px 0px 2px rgba(210, 210, 210, 0.31));
+        }
+        50% { 
+          transform: translateY(-36px); 
+          filter: drop-shadow(0px 0px 40px rgb(0, 0, 0));
+        }
+        100% {
+          transform: translateY(0px); 
+          filter: drop-shadow(0px 0px 2px rgba(210, 210, 210, 0.31));
+        }
+      }
+      .logo {
+        overflow: hidden;
+        transition: opacity 2s ease-in-out;
+        filter: drop-shadow(1px 1px 1px #919191,
+        1px 2px 1px #919191,
+        1px 3px 1px #919191,
+        1px 4px 1px #919191,
+        1px 5px 1px #919191,
+        1px 6px 1px #919191,
+        1px 7px 1px #919191,
+        1px 8px 1px #919191,
+        1px 9px 1px #919191,
+        1px 10px 1px #919191,
+    1px 18px 6px rgba(16,16,16,0.4),
+    1px 22px 10px rgba(16,16,16,0.2),
+    1px 25px 35px rgba(16,16,16,0.2),
+    1px 30px 60px rgba(16,16,16,0.4))
+      }
+      .logo.active {
+        animation: float 10s ease-in-out infinite;
+        opacity: 1;
+      }
+      .logo:not(.active) {
+        opacity: 0;
+      }
+    `;
+    document.head.appendChild(style);
   }
 
   init() {
     if (this.logos.length > 0) {
       this.logos[0].classList.add("active");
     }
-  }
-
-  getRandomAnimationPair() {
-    return this.animationPairs[Math.floor(Math.random() * this.animationPairs.length)];
   }
 
   start(intervalTime = 10000) {
@@ -35,14 +71,9 @@ export class LogoAnimation {
     const currentLogo = this.logos[this.currentIndex];
     const nextIndex = (this.currentIndex + 1) % this.logos.length;
     const nextLogo = this.logos[nextIndex];
-    const animations = this.getRandomAnimationPair();
 
-    // Remove current logo with exit animation
-    currentLogo.style.animation = `${animations.exit} 1s forwards`;
+    // Smooth transition between logos
     currentLogo.classList.remove("active");
-
-    // Add next logo with entrance animation
-    nextLogo.style.animation = `${animations.enter} 1s forwards`;
     nextLogo.classList.add("active");
 
     this.currentIndex = nextIndex;
