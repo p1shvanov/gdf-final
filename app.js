@@ -1,20 +1,25 @@
 import { CONFIG } from "./config.js";
 import { getPixelRatio, setupCanvas } from "./canvas-utils.js";
 import { BinaryAnimation } from "./binary-animation.js";
-import { TerminalAnimation } from "./terminal-animation.js";
+import { Terminal } from "./terminal.js";
 import { LogoAnimation } from "./logo-animation.js";
+import { LingoAnimation } from "./lingo-animation.js";
 
 class App {
   constructor() {
     window.PIXEL_RATIO = getPixelRatio();
     this.canvas = setupCanvas();
     this.binaryAnimation = new BinaryAnimation(this.canvas, CONFIG);
-    this.terminalAnimation = new TerminalAnimation(
-      "terminal",
-      CONFIG.DEMO_WORDS,
-      CONFIG.BRANDBOOK_COLORS
-    );
+    
+    // Initialize terminal
+    const terminalContainer = document.getElementById('terminal-container');
+    if (terminalContainer) {
+      this.terminal = new Terminal(CONFIG.DEMO_WORDS, CONFIG.BRANDBOOK_COLORS);
+      terminalContainer.appendChild(this.terminal.element);
+    }
+    
     this.logoAnimation = new LogoAnimation();
+    this.lingoAnimation = new LingoAnimation(CONFIG)
 
     this.init();
   }
@@ -22,6 +27,7 @@ class App {
   init() {
     this.binaryAnimation.draw();
     this.logoAnimation.start();
+    this.lingoAnimation.init();
 
     window.addEventListener("resize", this.handleResize.bind(this));
   }
@@ -39,6 +45,7 @@ class App {
     // Reinitialize binary animation
     this.binaryAnimation = new BinaryAnimation(this.canvas, CONFIG);
     this.binaryAnimation.draw();
+    this.lingoAnimation.init()
   }
 }
 

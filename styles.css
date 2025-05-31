@@ -3,6 +3,15 @@
   --color-background-dark: #0f1e28;
   --space-unit: 1em;
   --space-lg: calc(4 * var(--space-unit));
+
+  /* Z-index layers */
+  --z-binary: 1;        /* Бинарный код */
+  --z-overlay: 2;       /* Затемнение */
+  --z-lingo: 3;         /* Летящие слова */
+  --z-content: 4;       /* Логотип и заголовки */
+  --z-terminal: 5;      /* Терминал */
+  --z-modal: 10;        /* Модальные окна (для будущего использования) */
+  --z-tooltip: 11;      /* Всплывающие подсказки (для будущего использования) */
 }
 
 * {
@@ -25,7 +34,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: var(--z-binary);
 }
 
 #canvas-overlay {
@@ -36,7 +45,7 @@ body {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.3);
   pointer-events: none;
-  z-index: 0;
+  z-index: var(--z-overlay);
 }
 
 .content {
@@ -50,7 +59,7 @@ body {
   height: 100vh;
   padding: var(--space-unit);
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
 }
 
 .header {
@@ -115,6 +124,7 @@ body {
   overflow: hidden;
   position: relative;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  z-index: var(--z-terminal);
 }
 
 .terminal-header {
@@ -268,4 +278,23 @@ body {
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+.lingo {
+  position: absolute;
+  color: var(--color-white);
+  font-size: 0.8rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateZ(0);
+	animation: flythrough 5s forwards ease-in;
+  transform-origin: center;
+  z-index: var(--z-lingo);
+  text-transform: uppercase;
+}
+
+@-webkit-keyframes flythrough {
+	0% {opacity: 0; transform: perspective(0px) translate3d(var(--init-x),var(--init-y),0px);}
+	50% {opacity: 0.7;}
+	100% {opacity: 0; transform: perspective(500px) translate3d(var(--dest-x),var(--dest-y), var(--dest-z));}
 }
