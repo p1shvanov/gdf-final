@@ -9,7 +9,7 @@ export class BinaryAnimation {
     this.interval = 2000 / this.config.FPS;
     this.frameCount = 0;
 
-    // Инициализация эффектов
+    // Initialize effects
     if (this.config.WAVES.ENABLED) {
       this.wavePosition = 0;
     }
@@ -18,10 +18,10 @@ export class BinaryAnimation {
   }
 
   init() {
-    // Создание градиента
+    // Create gradient
     this.setupGradient();
 
-    // Настройка битов
+    // Setup bits
     this.setupBits();
     this.drawInitialBits();
   }
@@ -82,7 +82,7 @@ export class BinaryAnimation {
     if (delta > this.interval) {
       this.updateBits();
 
-      // Специальные эффекты
+      // Special effects
       if (this.config.TWINKLE.ENABLED) this.applyTwinkleEffect();
       if (this.config.WAVES.ENABLED) this.applyWaveEffect();
 
@@ -158,7 +158,7 @@ export class BinaryAnimation {
   }
 
   redrawArea(x, y, width, height) {
-    // Перерисовываем область после специальных эффектов
+    // Redraw area after special effects
     const startCol = Math.floor(x / this.config.FONT_SIZE);
     const endCol = Math.ceil((x + width) / this.config.FONT_SIZE);
     const startRow = Math.floor(y / this.config.FONT_SIZE);
@@ -180,12 +180,12 @@ export class BinaryAnimation {
   }
 
   resize(width, height) {
-    this.canvas.width = width * window.PIXEL_RATIO;
-    this.canvas.height = height * window.PIXEL_RATIO;
+    this.canvas.width = width * this.config.PIXEL_RATIO;
+    this.canvas.height = height * this.config.PIXEL_RATIO;
     this.canvas.style.width = `${width}px`;
     this.canvas.style.height = `${height}px`;
 
-    // Пересоздаём биты для новых размеров
+    // Recreate bits for new dimensions
     this.bits = [];
     this.init();
   }

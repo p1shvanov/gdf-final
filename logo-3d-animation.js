@@ -1,3 +1,5 @@
+import { CONFIG } from './config.js';
+
 export class Logo3DAnimation {
   constructor() {
     this.scene = new THREE.Scene();
@@ -6,7 +8,12 @@ export class Logo3DAnimation {
       antialias: true,
       alpha: true 
     });
-    this.camera = new THREE.PerspectiveCamera(80, this.ratio, 0.01, 1000);
+    this.camera = new THREE.PerspectiveCamera(
+      CONFIG.LOGO_3D.CAMERA.FOV,
+      this.ratio,
+      CONFIG.LOGO_3D.CAMERA.NEAR,
+      CONFIG.LOGO_3D.CAMERA.FAR
+    );
     this.svgGroup = null;
     this.rotationGroup = null;
     this.isAnimating = false;
@@ -84,12 +91,15 @@ export class Logo3DAnimation {
 
   init() {
     // Setup renderer
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    const container = document.querySelector(".logo-3d");
+    const rect = container.getBoundingClientRect();
+    this.renderer.setSize(rect.width, rect.height);
     this.renderer.setClearColor(0x000000, 0);
-    document.querySelector(".logo-3d-container").appendChild(this.renderer.domElement);
+    
+    container.appendChild(this.renderer.domElement);
 
     // Setup camera
-    this.camera.position.z = 200;
+    this.camera.position.z = CONFIG.LOGO_3D.CAMERA.POSITION_Z;
 
     // Add lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
@@ -105,7 +115,7 @@ export class Logo3DAnimation {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
         this.handleResize();
-      }, 100);
+      }, CONFIG.CANVAS.RESIZE_DEBOUNCE);
     });
 
     // Load and parse SVG
@@ -115,9 +125,11 @@ export class Logo3DAnimation {
   handleResize() {
     if (!this.isAnimating) return;
 
-    this.camera.aspect = window.innerWidth / window.innerHeight;
+    const container = document.querySelector(".logo-3d");
+    const rect = container.getBoundingClientRect();
+    this.camera.aspect = rect.width / rect.height;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(rect.width, rect.height);
   }
 
   loadSVG() {
@@ -134,17 +146,17 @@ export class Logo3DAnimation {
 
       shapes.forEach((shape) => {
         const geometry = new THREE.ExtrudeGeometry(shape, {
-          depth: 30,
+          depth: CONFIG.LOGO_3D.EXTRUDE.DEPTH,
           bevelEnabled: true,
-          bevelThickness: 2,
-          bevelSize: 2,
-          bevelSegments: 3
+          bevelThickness: CONFIG.LOGO_3D.EXTRUDE.BEVEL_THICKNESS,
+          bevelSize: CONFIG.LOGO_3D.EXTRUDE.BEVEL_SIZE,
+          bevelSegments: CONFIG.LOGO_3D.EXTRUDE.BEVEL_SEGMENTS
         });
 
         // Convert hex colors to RGB
-        const color1 = new THREE.Color(this.brandColors[1]);
-        const color2 = new THREE.Color(this.brandColors[0]);
-        const color3 = new THREE.Color(this.brandColors[2]);
+        const color1 = new THREE.Color(CONFIG.BRANDBOOK_COLORS[1]);
+        const color2 = new THREE.Color(CONFIG.BRANDBOOK_COLORS[0]);
+        const color3 = new THREE.Color(CONFIG.BRANDBOOK_COLORS[2]);
 
         // Create shader material with gradient
         const material = new THREE.ShaderMaterial({
@@ -152,11 +164,11 @@ export class Logo3DAnimation {
             color1: { value: new THREE.Vector3(color1.r, color1.g, color1.b) },
             color2: { value: new THREE.Vector3(color2.r, color2.g, color2.b) },
             color3: { value: new THREE.Vector3(color3.r, color3.g, color3.b) },
-            contrast: { value: this.shaderParams.contrast },
-            tealInfluence: { value: this.shaderParams.tealInfluence },
-            fresnelIntensity: { value: this.shaderParams.fresnelIntensity },
-            saturation: { value: this.shaderParams.saturation },
-            brightness: { value: this.shaderParams.brightness }
+            contrast: { value: CONFIG.LOGO_3D.SHADER.CONTRAST },
+            tealInfluence: { value: CONFIG.LOGO_3D.SHADER.TEAL_INFLUENCE },
+            fresnelIntensity: { value: CONFIG.LOGO_3D.SHADER.FRESNEL_INTENSITY },
+            saturation: { value: CONFIG.LOGO_3D.SHADER.SATURATION },
+            brightness: { value: CONFIG.LOGO_3D.SHADER.BRIGHTNESS }
           },
           vertexShader: this.vertexShader,
           fragmentShader: this.fragmentShader
@@ -174,10 +186,6 @@ export class Logo3DAnimation {
     const center = new THREE.Vector3();
     box.getCenter(center);
 
-    console.log('Original center:', center);
-    console.log('Original size:', size);
-
-    // Scale the group first
     const scale = 100 / Math.max(size.x, size.y);
     this.svgGroup.scale.set(scale, -scale, scale);
 
@@ -201,12 +209,6 @@ export class Logo3DAnimation {
     
     // Add to scene
     this.scene.add(this.rotationGroup);
-    
-    // Log final positions and sizes
-    console.log('SVG group position:', this.svgGroup.position);
-    console.log('Container group position:', containerGroup.position);
-    console.log('Rotation group position:', this.rotationGroup.position);
-    console.log('Final size:', size);
   }
 
   animate() {
@@ -215,7 +217,7 @@ export class Logo3DAnimation {
     this.renderer.render(this.scene, this.camera);
 
     if (this.rotationGroup) {
-      this.rotationGroup.rotation.y += 0.01;
+      this.rotationGroup.rotation.y += CONFIG.LOGO_3D.ROTATION.SPEED;
     }
     
     this.animationFrameId = requestAnimationFrame(this.animate.bind(this));

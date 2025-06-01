@@ -1,30 +1,54 @@
 :root {
+  /* Colors */
   --color-white: #ffffff;
   --color-background-dark: #0f1e28;
+  --color-overlay: rgba(0, 0, 0, 0.3);
+  
+  /* Spacing */
   --space-unit: 1em;
+  --space-xs: calc(0.5 * var(--space-unit));
+  --space-sm: calc(1 * var(--space-unit));
+  --space-md: calc(2 * var(--space-unit));
   --space-lg: calc(8 * var(--space-unit));
-
+  
+  /* Typography */
+  --font-family-primary: 'Inter', sans-serif;
+  --font-size-base: 16px;
+  --font-size-h1: clamp(3rem, 5vw, 5rem);
+  --font-size-h2: clamp(2rem, 2.5vw, 3rem);
+  
   /* Z-index layers */
-  --z-binary: 1;        /* Бинарный код */
-  --z-overlay: 2;       /* Затемнение */
-  --z-lingo: 3;         /* Летящие слова */
-  --z-content: 4;       /* Логотип и заголовки */
+  --z-binary: 1;
+  --z-overlay: 2;
+  --z-lingo: 3;
+  --z-content: 4;
+  
+  /* Animation */
+  --animation-duration: 5s;
+  --animation-timing: ease-in;
 }
 
+/* Reset & Base Styles */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html {
+  font-size: var(--font-size-base);
+}
+
 body {
   height: 100vh;
   overflow: hidden;
   background: var(--color-background-dark);
-  font-family: "Coolvetica", sans-serif;
+  font-family: var(--font-family-primary);
   display: flex;
+  color: var(--color-white);
 }
 
+/* Background Effects */
 #binary-canvas {
   position: fixed;
   top: 0;
@@ -40,35 +64,26 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: var(--color-overlay);
   pointer-events: none;
   z-index: var(--z-overlay);
 }
 
+/* Layout */
 .content {
   flex: 1;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  padding: var(--space-unit);
+  padding: var(--space-sm);
   position: relative;
   z-index: var(--z-content);
 }
 
-/* Three.js canvas styles */
-canvas {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: var(--z-content);
-}
-
+/* Header */
 .header {
   text-align: center;
-  color: var(--color-white);
   padding-top: var(--space-lg);
-  font-family: 'Inter', sans-serif;
-  font-weight: 900;
   position: absolute;
   top: 0;
   left: 0;
@@ -77,11 +92,14 @@ canvas {
 }
 
 .header-title {
-  font-size: clamp(3rem, 5vw, 5rem);
+  font-size: var(--font-size-h1);
   line-height: 1.2;
   letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-weight: 900;
 }
 
+/* Footer */
 .footer {
   position: absolute;
   bottom: 0;
@@ -89,70 +107,58 @@ canvas {
   right: 0;
   text-align: center;
   padding-bottom: var(--space-lg);
-  color: var(--color-white);
-  font-family: 'Inter', sans-serif;
   z-index: var(--z-content);
 }
 
 .footer-subtitle {
-  font-weight: 300;
-  font-size: clamp(2rem, 2.5vw, 3rem);
+  font-size: var(--font-size-h2);
   letter-spacing: 0.02em;
   opacity: 0.9;
   font-weight: 700;
 }
 
+/* Logo */
 .logo-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 80%;
-  aspect-ratio: 1;
   z-index: var(--z-content);
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 var(--space-sm);
 }
 
 .logo-wrapper {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 2rem;
+  gap: var(--space-md);
   width: 100%;
-  height: 100%;
 }
 
-.logo-3d-container {
-  width: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.logo-3d {
+  position: relative;
+  width: min(400px, 40vw);
+  height: min(400px, 40vw);
+  flex-shrink: 0;
 }
 
-.logo {
+.logo-hidden {
+  display: none;
+}
+
+.text-logo {
+  flex: 1;
+}
+
+.text-logo img {
   width: 100%;
   height: auto;
-  object-fit: contain;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
   display: block;
 }
 
-.secondary-logo {
-  width: 70%;
-  height: auto;
-  object-fit: contain;
-  opacity: 1;
-  transition: opacity 1s ease-in-out;
-  margin-left: -700px;
-}
-
-.logo.active,
-.secondary-logo.active {
-  opacity: 1;
-}
-
+/* Flying Text Animation */
 .lingo {
   position: absolute;
   color: var(--color-white);
@@ -160,15 +166,53 @@ canvas {
   opacity: 0;
   pointer-events: none;
   transform: translateZ(0);
-  animation: flythrough 5s forwards ease-in;
+  animation: flythrough var(--animation-duration) forwards var(--animation-timing);
   transform-origin: center;
   z-index: var(--z-lingo);
   font-weight: 300;
 }
 
-@-webkit-keyframes flythrough {
-  0% {opacity: 0; transform: perspective(0px) translate3d(var(--init-x),var(--init-y),0px);}
-  50% {opacity: 0.7;}
-  100% {opacity: 0; transform: perspective(500px) translate3d(var(--dest-x),var(--dest-y), var(--dest-z));}
+@keyframes flythrough {
+  0% {
+    opacity: 0;
+    transform: perspective(0px) translate3d(var(--init-x), var(--init-y), 0px);
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: perspective(500px) translate3d(var(--dest-x), var(--dest-y), var(--dest-z));
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .logo-wrapper {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  
+  .logo-3d {
+    width: min(300px, 60vw);
+    height: min(300px, 60vw);
+  }
+  
+  .text-logo {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --space-lg: calc(4 * var(--space-unit));
+  }
+  
+  .logo-3d {
+    width: min(250px, 70vw);
+    height: min(250px, 70vw);
+  }
 }
 
