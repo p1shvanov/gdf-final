@@ -1,44 +1,56 @@
 import { CONFIG } from "./config.js";
 import { getPixelRatio, setupCanvas } from "./canvas-utils.js";
 import { BinaryAnimation } from "./binary-animation.js";
-import { TerminalAnimation } from "./terminal-animation.js";
-import { LogoAnimation } from "./logo-animation.js";
+import { LingoAnimation } from "./lingo-animation.js";
+import { Logo3DAnimation } from "./logo-3d-animation.js";
+import { ConfigPanel } from "./config-panel.js";
 
 class App {
   constructor() {
     window.PIXEL_RATIO = getPixelRatio();
     this.canvas = setupCanvas();
     this.binaryAnimation = new BinaryAnimation(this.canvas, CONFIG);
-    this.terminalAnimation = new TerminalAnimation(
-      "terminal",
-      CONFIG.DEMO_WORDS,
-      CONFIG.BRANDBOOK_COLORS
-    );
-    this.logoAnimation = new LogoAnimation();
+    this.lingoAnimation = new LingoAnimation(CONFIG);
+    this.logo3DAnimation = new Logo3DAnimation();
+    this.configPanel = new ConfigPanel(this);
 
     this.init();
   }
 
   init() {
     this.binaryAnimation.draw();
-    this.logoAnimation.start();
+    this.lingoAnimation.init();
+    this.logo3DAnimation.start();
 
-    window.addEventListener("resize", this.handleResize.bind(this));
+    // Add debounced resize handler
+    let resizeTimeout;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        this.handleResize();
+      }, CONFIG.CANVAS.RESIZE_DEBOUNCE);
+    });
   }
 
   handleResize() {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
-    // Stop current animation
+    // Stop current animations
     this.binaryAnimation.stop();
+    this.logo3DAnimation.stop();
 
     // Recreate canvas with new dimensions
     this.canvas = setupCanvas();
 
-    // Reinitialize binary animation
+    // Reinitialize animations
     this.binaryAnimation = new BinaryAnimation(this.canvas, CONFIG);
     this.binaryAnimation.draw();
+    this.lingoAnimation.init();
+    
+    // Recreate and start 3D logo animation
+    this.logo3DAnimation = new Logo3DAnimation();
+    this.logo3DAnimation.start();
   }
 }
 

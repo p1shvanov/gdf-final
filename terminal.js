@@ -1,7 +1,5 @@
-export class TerminalAnimation {
-  constructor(targetId, words, colors) {
-    this.historyTarget = document.getElementById('terminal-history');
-    this.inputTarget = document.getElementById('terminal-input');
+export class Terminal {
+  constructor(words, colors) {
     this.words = words || [];
     this.colors = colors || ["#fff"];
     this.commands = [];
@@ -15,7 +13,55 @@ export class TerminalAnimation {
     this.isGenerating = false;
     this.alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     
+    this.element = this.createTerminalElement();
     this.init();
+  }
+
+  createTerminalElement() {
+    const terminalHTML = `
+      <div class="console-container">
+        <div class="terminal-header">
+          <div class="terminal-buttons">
+            <button class="terminal-button close" title="Close terminal"></button>
+            <button class="terminal-button minimize" title="Minimize terminal"></button>
+            <button class="terminal-button maximize" title="Maximize terminal"></button>
+          </div>
+          <div class="terminal-title">gdf-terminal</div>
+        </div>
+        <div class="terminal-content">
+          <div class="terminal-history" id="terminal-history"></div>
+          <div class="terminal-input" id="terminal-input"></div>
+        </div>
+      </div>
+    `;
+
+    // Create a temporary container to parse the HTML string
+    const temp = document.createElement('div');
+    temp.innerHTML = terminalHTML;
+    const terminalElement = temp.firstElementChild;
+
+    // Store references to important elements
+    this.historyTarget = terminalElement.querySelector('#terminal-history');
+    this.inputTarget = terminalElement.querySelector('#terminal-input');
+
+    // Add event listeners for terminal buttons
+    const closeButton = terminalElement.querySelector('.close');
+    const minimizeButton = terminalElement.querySelector('.minimize');
+    const maximizeButton = terminalElement.querySelector('.maximize');
+
+    closeButton?.addEventListener('click', () => {
+      terminalElement.style.display = 'none';
+    });
+
+    minimizeButton?.addEventListener('click', () => {
+      terminalElement.classList.toggle('minimized');
+    });
+
+    maximizeButton?.addEventListener('click', () => {
+      terminalElement.classList.toggle('maximized');
+    });
+
+    return terminalElement;
   }
 
   init() {
