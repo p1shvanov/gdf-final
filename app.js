@@ -3,6 +3,7 @@ import { getPixelRatio, setupCanvas } from "./canvas-utils.js";
 import { BinaryAnimation } from "./binary-animation.js";
 import { LingoAnimation } from "./lingo-animation.js";
 import { Logo3DAnimation } from "./logo-3d-animation.js";
+import { ConfigPanel } from "./config-panel.js";
 
 class App {
   constructor() {
@@ -11,6 +12,7 @@ class App {
     this.binaryAnimation = new BinaryAnimation(this.canvas, CONFIG);
     this.lingoAnimation = new LingoAnimation(CONFIG);
     this.logo3DAnimation = new Logo3DAnimation();
+    this.configPanel = new ConfigPanel(this);
 
     this.init();
   }
@@ -20,7 +22,14 @@ class App {
     this.lingoAnimation.init();
     this.logo3DAnimation.start();
 
-    window.addEventListener("resize", this.handleResize.bind(this));
+    // Add debounced resize handler
+    let resizeTimeout;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        this.handleResize();
+      }, CONFIG.CANVAS.RESIZE_DEBOUNCE);
+    });
   }
 
   handleResize() {
@@ -38,6 +47,9 @@ class App {
     this.binaryAnimation = new BinaryAnimation(this.canvas, CONFIG);
     this.binaryAnimation.draw();
     this.lingoAnimation.init();
+    
+    // Recreate and start 3D logo animation
+    this.logo3DAnimation = new Logo3DAnimation();
     this.logo3DAnimation.start();
   }
 }

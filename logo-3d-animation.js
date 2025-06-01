@@ -20,15 +20,15 @@ export class Logo3DAnimation {
     this.animationFrameId = null;
     
     // Brand colors
-    this.brandColors = ["#5e2ced", "#db6dc4", "#4fdfb4"];
+    this.brandColors = CONFIG.COLORS.BRANDBOOK;
     
     // Shader parameters
     this.shaderParams = {
-      contrast: 1,        // Controls the sharpness of color transitions (0.5 - 1.0)
-      tealInfluence: 1,   // How much the teal color influences the gradient (0.0 - 1.0)
-      fresnelIntensity: 1, // Intensity of the edge highlight effect (0.0 - 1.0)
-      saturation: 1,     // Color saturation (0.7 - 1.0)
-      brightness: 1       // Overall brightness (0.7 - 1.0)
+      contrast: CONFIG.LOGO_3D.SHADER.CONTRAST,
+      tealInfluence: CONFIG.LOGO_3D.SHADER.TEAL_INFLUENCE,
+      fresnelIntensity: CONFIG.LOGO_3D.SHADER.FRESNEL_INTENSITY,
+      saturation: CONFIG.LOGO_3D.SHADER.SATURATION,
+      brightness: CONFIG.LOGO_3D.SHADER.BRIGHTNESS
     };
     
     // Add shader code for gradient
@@ -154,9 +154,9 @@ export class Logo3DAnimation {
         });
 
         // Convert hex colors to RGB
-        const color1 = new THREE.Color(CONFIG.BRANDBOOK_COLORS[1]);
-        const color2 = new THREE.Color(CONFIG.BRANDBOOK_COLORS[0]);
-        const color3 = new THREE.Color(CONFIG.BRANDBOOK_COLORS[2]);
+        const color1 = new THREE.Color(CONFIG.COLORS.BRANDBOOK[1]);
+        const color2 = new THREE.Color(CONFIG.COLORS.BRANDBOOK[0]);
+        const color3 = new THREE.Color(CONFIG.COLORS.BRANDBOOK[2]);
 
         // Create shader material with gradient
         const material = new THREE.ShaderMaterial({
@@ -206,8 +206,6 @@ export class Logo3DAnimation {
     // Create rotation group
     this.rotationGroup = new THREE.Group();
     this.rotationGroup.add(containerGroup);
-    
-    // Add to scene
     this.scene.add(this.rotationGroup);
   }
 

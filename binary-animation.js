@@ -28,11 +28,11 @@ export class BinaryAnimation {
 
   setupGradient() {
     this.gradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
-    this.gradient.addColorStop(0, this.config.BRANDBOOK_COLORS[0]);
-    this.gradient.addColorStop(0.5, this.config.BRANDBOOK_COLORS[1]);
-    this.gradient.addColorStop(1, this.config.BRANDBOOK_COLORS[2]);
+    this.gradient.addColorStop(0, this.config.COLORS.BRANDBOOK[0]);
+    this.gradient.addColorStop(0.5, this.config.COLORS.BRANDBOOK[1]);
+    this.gradient.addColorStop(1, this.config.COLORS.BRANDBOOK[2]);
 
-    this.ctx.fillStyle = this.config.BACKGROUND_COLOR;
+    this.ctx.fillStyle = this.config.COLORS.BACKGROUND;
     this.ctx.font = `${this.config.FONT_SIZE}px Monaco`;
     this.ctx.textBaseline = "bottom";
   }
@@ -113,13 +113,13 @@ export class BinaryAnimation {
     if (Math.random() < this.config.TWINKLE.PROBABILITY) {
       const randomBit = this.bits[Math.floor(Math.random() * this.bits.length)];
       if (!randomBit.isEmpty) {
-        this.ctx.fillStyle = this.config.TWINKLE_COLOR;
+        this.ctx.fillStyle = this.config.COLORS.TWINKLE;
         this.drawBit(randomBit);
 
         setTimeout(() => {
           this.ctx.fillStyle = this.gradient;
           this.drawBit(randomBit);
-        }, this.config.TWINKLE.DURATION_MS);
+        }, this.config.TWINKLE.DURATION);
       }
     }
   }

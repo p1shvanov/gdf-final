@@ -216,3 +216,141 @@ body {
   }
 }
 
+/* Configuration Panel */
+.config-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-white);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-background-dark);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: transform 0.2s ease;
+}
+
+.config-toggle:hover {
+  transform: scale(1.1);
+}
+
+.config-panel {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: 100vh;
+  background: var(--color-background-dark);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 999;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+}
+
+.config-panel.active {
+  right: 0;
+}
+
+.config-panel-content {
+  padding: 20px;
+  color: var(--color-white);
+}
+
+.config-panel h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.config-section {
+  margin-bottom: 24px;
+}
+
+.config-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  font-weight: 500;
+  color: var(--color-white);
+  opacity: 0.9;
+}
+
+.config-group {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.config-group label {
+  font-size: 0.9rem;
+  color: var(--color-white);
+  opacity: 0.8;
+}
+
+.config-group input[type="number"],
+.config-group input[type="range"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-white);
+  border-radius: 4px;
+}
+
+.config-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.config-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.button {
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-white);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.button-primary {
+  background: var(--color-white);
+  color: var(--color-background-dark);
+  border: none;
+}
+
+.button-primary:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive Design for Config Panel */
+@media (max-width: 480px) {
+  .config-panel {
+    width: 100%;
+    right: -100%;
+  }
+  
+  .config-toggle {
+    bottom: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
