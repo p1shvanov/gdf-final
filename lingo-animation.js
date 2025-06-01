@@ -3,7 +3,7 @@ export class LingoAnimation {
     this.config = config;
     this.divs = [];
     this.counter = 0;
-    this.maxDivs = 600;
+    this.maxDivs = 1000;
     this.bodyH = document.body.clientHeight;
     this.bodyW = document.body.clientWidth;
   }
@@ -16,7 +16,7 @@ export class LingoAnimation {
 
     // Start interval for creating new divs
     setTimeout(() => {
-      setInterval(() => this.newLingo(), 15);
+      setInterval(() => this.newLingo(), 10);
     }, 750);
 
     // Add resize handler

@@ -1,6 +1,6 @@
 export const CONFIG = {
   // Основные настройки
-  FPS: 60,
+  FPS: 30,
   FONT_SIZE: 14,
 
   // Символы

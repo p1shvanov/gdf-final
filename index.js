@@ -41,6 +41,7 @@ let PIXEL_RATIO = (function () {
 })();
 
 const logos = document.querySelectorAll(".logo");
+const secondaryLogos = document.querySelectorAll(".secondary-logo");
 
 createHiDPICanvas = function (w, h, ratio) {
   if (!ratio) {
@@ -186,11 +187,14 @@ function consoleText(words, id, colors) {
 function rotateLogos() {
   let currentIndex = 0;
   logos[currentIndex].classList.remove("active");
+  secondaryLogos[currentIndex].classList.remove("active");
   currentIndex = (currentIndex + 1) % logos.length;
   logos[currentIndex].classList.add("active");
+  secondaryLogos[currentIndex].classList.add("active");
 }
 
 logos[0].classList.add("active");
+secondaryLogos[0].classList.add("active");
 
 draw();
 consoleText(DEMO_WORDS, "text", BRANDBOOK_COLORS);

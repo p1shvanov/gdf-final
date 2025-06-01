@@ -5,57 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Global Digital Forum</title>
     <link rel="stylesheet" href="styles.css" />
-    <style>
-      @font-face {
-        font-family: 'Coolvetica';
-        src: url('fonts/CoolveticaEl-Regular.woff2') format('woff2'),
-             url('fonts/CoolveticaEl-Regular.woff') format('woff');
-        font-weight: 200;
-        font-style: normal;
-      }
-      @font-face {
-        font-family: 'Coolvetica';
-        src: url('fonts/CoolveticaLt-Regular.woff2') format('woff2'),
-             url('fonts/CoolveticaLt-Regular.woff') format('woff');
-        font-weight: 300;
-        font-style: normal;
-      }
-      @font-face {
-        font-family: 'Coolvetica';
-        src: url('fonts/CoolveticaRg-Regular.woff2') format('woff2'),
-             url('fonts/CoolveticaRg-Regular.woff') format('woff');
-        font-weight: 400;
-        font-style: normal;
-      }
-      @font-face {
-        font-family: 'Coolvetica';
-        src: url('fonts/CoolveticaRg-Bold.woff2') format('woff2'),
-             url('fonts/CoolveticaRg-Bold.woff') format('woff');
-        font-weight: 700;
-        font-style: normal;
-      }
-      @font-face {
-        font-family: 'Coolvetica';
-        src: url('fonts/CoolveticaHv-Regular.woff2') format('woff2'),
-             url('fonts/CoolveticaHv-Regular.woff') format('woff');
-        font-weight: 800;
-        font-style: normal;
-      }
-      @font-face {
-        font-family: 'Coolvetica';
-        src: url('fonts/CoolveticaBk-Regular.woff2') format('woff2'),
-             url('fonts/CoolveticaBk-Regular.woff') format('woff');
-        font-weight: 900;
-        font-style: normal;
-      }
-    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
   </head>
   <body>
     <canvas id="binary-canvas"></canvas>
@@ -67,13 +19,28 @@
       </header>
 
       <div class="logo-container">
-        <img src='../assets/logo.svg' alt="Global Digital Forum" />
+        <div class="logo-wrapper">
+          <div class="logo-3d-container">
+            <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 748.06 161.22">
+              <defs>
+              </defs>
+                  <path d="M70.56,98.27c-1.47-.4-2.9-.88-4.3-1.43-15.45-6.09-26.34-21.13-26.34-38.67,0-22.95,18.62-41.55,41.58-41.55h.03V0h-.03C49.35,0,23.29,26.04,23.29,58.17c0,24.6,15.28,45.63,36.87,54.14.06.03.13.05.2.08l10.2-14.11Z"/>
+                  <path d="M42.24,136.61l-9.84,13.41c9.49,6.71,21.07,10.65,33.58,10.65,32.15,0,58.22-26.04,58.22-58.17,0-11.26-3.2-21.77-8.75-30.67l-16.42,5.46c5.35,6.99,8.53,15.73,8.53,25.21,0,22.95-18.61,41.55-41.58,41.55-8.83,0-17.01-2.75-23.74-7.43Z"/>
+                  <path d="M18.57,62.22l-15.78-5.28c-1.81,5.62-2.79,11.62-2.79,17.85,0,32.13,26.07,58.17,58.22,58.17,17.9,0,33.92-8.08,44.6-20.78l-10.23-14c-7.48,10.96-20.09,18.16-34.37,18.16-22.97,0-41.58-18.6-41.58-41.55,0-4.38.67-8.6,1.93-12.57Z"/>
+                  <path d="M121.35,136.2l9.99,13.3c14.49-10.58,23.9-27.69,23.9-47,0-32.13-26.06-58.17-58.21-58.17-5.38,0-10.58.73-15.53,2.09v17.52c4.8-1.93,10.04-2.99,15.53-2.99,22.96,0,41.58,18.6,41.58,41.55,0,13.87-6.8,26.16-17.26,33.7Z"/>
+                  <path d="M63.28,77.26c-.05-.82-.07-1.64-.07-2.47,0-22.95,18.62-41.55,41.58-41.55,18.61,0,34.37,12.22,39.67,29.07l15.78-5.28c-7.51-23.44-29.5-40.41-55.45-40.41-31.1,0-56.51,24.38-58.13,55.05l16.62,5.58Z"/>
+            </svg>
+          </div>
+          <img src="./GDF_Logo-06.svg" class="secondary-logo" alt="GDF Logo" />
+        </div>
       </div>
       <footer class="footer">
         <div class="footer-subtitle">Shaping tomorrow's code at the Global Digital Forum</div>
       </footer>
     </main>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/SVGLoader.js"></script>
     <script type="module" src="app.js"></script>
   </body>
 </html>
