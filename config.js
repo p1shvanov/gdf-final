@@ -38,16 +38,16 @@ export const CONFIG = {
   // 3D Logo Camera
   LOGO_3D: {
     CAMERA: {
-      FOV: 80,
+      FOV: 10,
       NEAR: 0.01,
       FAR: 1000,
-      POSITION_Z: 85
+      POSITION_Z: 800
     },
     ROTATION: {
       SPEED: 0.005
     },
     EXTRUDE: {
-      DEPTH: 20,
+      DEPTH: 50,
       BEVEL_THICKNESS: 2,
       BEVEL_SIZE: 2,
       BEVEL_SEGMENTS: 3

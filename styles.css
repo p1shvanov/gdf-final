@@ -133,7 +133,6 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  gap: var(--space-md);
   width: 100%;
 }
 
@@ -190,7 +189,6 @@ body {
 @media (max-width: 768px) {
   .logo-wrapper {
     flex-direction: column;
-    gap: var(--space-sm);
   }
   
   .logo-3d {
