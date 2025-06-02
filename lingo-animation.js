@@ -6,21 +6,44 @@ export class LingoAnimation {
     this.maxDivs = 1000;
     this.bodyH = document.body.clientHeight;
     this.bodyW = document.body.clientWidth;
+    this.words = []; // Initialize with empty array
+    this.animationInterval = null;
   }
 
   init() {
-    // Create initial divs
-    for (let i = 0; i < this.maxDivs / 3; i++) {
-      this.newLingo();
-    }
-
-    // Start interval for creating new divs
-    setTimeout(() => {
-      setInterval(() => this.newLingo(), 10);
-    }, 750);
-
     // Add resize handler
     window.addEventListener('resize', this.handleResize.bind(this));
+  }
+
+  updateWords(newWords) {
+    console.log('Raw words from API:', newWords); // Debug log
+    
+    // Update words array, filter out invalid words
+    this.words = newWords
+      .filter(word => {
+        const isValid = word !== null && word !== undefined;
+        if (!isValid) {
+          console.log('Invalid word:', word);
+        }
+        return isValid;
+      })
+      .map(word => String(word)); // Convert all values to strings
+    
+    console.log('Processed words:', this.words); // Debug log
+    
+    // Start animation if not already started
+    if (!this.animationInterval && this.words.length > 0) {
+      console.log('Starting animation with', this.words.length, 'words');
+      // Create initial divs
+      for (let i = 0; i < Math.min(this.maxDivs / 3, this.words.length); i++) {
+        this.newLingo();
+      }
+
+      // Start interval for creating new divs
+      setTimeout(() => {
+        this.animationInterval = setInterval(() => this.newLingo(), 10);
+      }, 750);
+    }
   }
 
   handleResize() {
@@ -29,9 +52,21 @@ export class LingoAnimation {
   }
 
   newLingo() {
+    if (!this.words || this.words.length === 0) {
+      console.log('No words available for animation');
+      return;
+    }
+
     const buffer = 0;
     this.counter++;
-    let lingo = this.getRandomValue(this.config.DEMO_WORDS);
+    const word = this.getRandomValue(this.words);
+    
+    if (!word) {
+      console.log('Invalid word selected:', word);
+      return;
+    }
+    
+    let lingo = word;
 
     // Replace < with &lt;
     const lthan = '<';
@@ -87,6 +122,7 @@ export class LingoAnimation {
   }
 
   getRandomValue(array) {
+    if (!array || array.length === 0) return null;
     return array[Math.floor(Math.random() * array.length)];
   }
 
