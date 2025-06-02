@@ -4,11 +4,15 @@ import { BinaryAnimation } from "./binary-animation.js";
 import { LingoAnimation } from "./lingo-animation.js";
 import { Logo3DAnimation } from "./logo-3d-animation.js";
 import { ConfigPanel } from "./config-panel.js";
+import { WordsReceiver } from "./words-receiver.js";
 
 class App {
   constructor() {
     window.PIXEL_RATIO = getPixelRatio();
     this.canvas = setupCanvas();
+    this.wordsReceiver = new WordsReceiver();
+    
+    // Initialize animations
     this.binaryAnimation = new BinaryAnimation(this.canvas, CONFIG);
     this.lingoAnimation = new LingoAnimation(CONFIG);
     this.logo3DAnimation = new Logo3DAnimation();
@@ -22,6 +26,10 @@ class App {
     this.lingoAnimation.init();
     this.logo3DAnimation.start();
 
+    // Subscribe to word updates and start polling
+    this.wordsReceiver.subscribe(this.handleNewWords.bind(this));
+    this.wordsReceiver.startPolling();
+
     // Add debounced resize handler
     let resizeTimeout;
     window.addEventListener("resize", () => {
@@ -30,6 +38,12 @@ class App {
         this.handleResize();
       }, CONFIG.CANVAS.RESIZE_DEBOUNCE);
     });
+  }
+
+  handleNewWords(words) {
+    // Update animations with new words
+    const wordValues = words.map(word => word.value);
+    this.lingoAnimation.updateWords(wordValues);
   }
 
   handleResize() {
