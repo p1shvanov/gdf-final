@@ -4,11 +4,9 @@ export class SheetsService {
   }
 
   async getWords() {
-    try {
-      console.log('Fetching verified words...');
+    try {;
       const response = await fetch(this.baseUrl);
-      const data = await response.json();
-      console.log('Received response:', data);
+      const data = await response.json();;
 
       if (data.status === 'success') {
         return data;

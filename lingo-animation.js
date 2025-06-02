@@ -16,7 +16,6 @@ export class LingoAnimation {
   }
 
   updateWords(newWords) {
-    console.log('Raw words from API:', newWords); // Debug log
     
     // Update words array, filter out invalid words
     this.words = newWords
@@ -29,11 +28,9 @@ export class LingoAnimation {
       })
       .map(word => String(word)); // Convert all values to strings
     
-    console.log('Processed words:', this.words); // Debug log
     
     // Start animation if not already started
     if (!this.animationInterval && this.words.length > 0) {
-      console.log('Starting animation with', this.words.length, 'words');
       // Create initial divs
       for (let i = 0; i < Math.min(this.maxDivs / 3, this.words.length); i++) {
         this.newLingo();
